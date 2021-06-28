@@ -7,10 +7,10 @@ var engine, world;
 var holder,ball,ground;
 var stand1,stand2;
 var ball;
-var rope;
+var slingShot;
 var polygon_img;
 function preload(){
- // polygon_img=loadImage("polygon.png");
+  polygon_img=loadImage("polygon.png");
 }
 function setup() {
   createCanvas(900,400);
@@ -18,12 +18,12 @@ function setup() {
   world = engine.world;
   Engine.run(engine);
   ground = new Ground();
-  stand1 = new Stand(390,300,250,10);
-  stand2 = new Stand(700,200,200,10);
+ stand1 = new Stand(390,300,250,10);
+  stand2 = new Stand(100,50,20,10);
  
   //level one
   block1 = new Block(300,275,30,40);
-  console.log(block1);
+  
   block2 = new Block(330,275,30,40);
   block3 = new Block(360,275,30,40);
   block4 = new Block(390,275,30,40);
@@ -36,17 +36,20 @@ function setup() {
   block10 = new Block(390,235,30,40);
   block11 = new Block(420,235,30,40);
   block12 = new Block(450,235,30,40);
-  //level three
+   //level three
   block13 = new Block(360,195,30,40);
   block14 = new Block(390,195,30,40);
   block15 = new Block(420,195,30,40);
   //top
   block16 = new Block(390,155,30,40);
 
-polygon=new Polygon(120,120)
-  
-//rope=new Rope(polygon.body,polygon.body.position,100,100)
+polygon=new Polygon(50,200)
+ 
 
+rope=new Chain(polygon.body,{x:100,y:200})
+console.log(rope)
+/*slingshot=new Slingshot(100,100,10,10)
+*/
 }
 function draw() {
   background(56,44,44); 
@@ -56,7 +59,7 @@ function draw() {
   
 
   ground.display();
-  stand1.display();
+ stand1.display();
   
   strokeWeight(2);
   stroke(15);
@@ -68,7 +71,7 @@ function draw() {
   block5.display();
   block6.display();
   block7.display();
-  fill("pink");
+   fill("pink");
   block8.display();
   block9.display();
   block10.display();
@@ -81,17 +84,20 @@ function draw() {
   fill("grey");
   block16.display();
  
-  polygon.display();
- //rope.display();
+ polygon.display();
+ rope.display();
+  /*slingshot.display()*/
+  stand2.display()
 }
-/*function mouseDragged(){
 
+function mouseDragged(){
+Matter.Body.setPosition(polygon.body,{x:mouseX,y:mouseY})
 }
-
 function mouseReleased(){
-
+rope.fly()
 }
-
 function keyPressed(){
-
-}*/
+  if (keyCode===32){
+    rope.attach(polygon.body)
+  }
+}
